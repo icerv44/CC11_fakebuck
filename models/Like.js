@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Like = sequelize.define(
-    "Likes",
+    "Like",
     {},
     {
       underscored: true,
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Like.associate = (models) => {
-    Like.belongsTo(models.Users, {
+    Like.belongsTo(models.User, {
       foreignKey: {
         name: "userId",
         allowNull: false,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
 
-    Like.belongsTo(models.Posts, {
+    Like.belongsTo(models.Post, {
       foreignKey: {
         name: "postId",
         allowNull: false,

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define(
-    "Comments",
+    "Comment",
     {
       title: {
         type: DataTypes.STRING,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Comment.associate = (models) => {
-    Comment.belongsTo(models.Users, {
+    Comment.belongsTo(models.User, {
       foreignKey: {
         name: "userId",
         allowNull: false,
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
 
-    Comment.belongsTo(models.Posts, {
+    Comment.belongsTo(models.Post, {
       foreignKey: {
         name: "postId",
         allowNull: false,

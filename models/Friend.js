@@ -1,32 +1,35 @@
+const { FRIEND_ACCEPTED, FRIEND_PENDING } = require("../config/constants");
+
 module.exports = (sequelize, DataTypes) => {
   const Friend = sequelize.define(
-    "Friends",
+    "Friend",
     {
       status: {
-        type: DataTypes.ENUM("ACCEPTED", "PENDING"),
+        type: DataTypes.ENUM(FRIEND_ACCEPTED, FRIEND_PENDING),
         allowNull: false,
         defaultValue: "PENDING",
       },
     },
     {
       underscored: true,
-      // , paranoid: true
     }
   );
 
   Friend.associate = (models) => {
-    Friend.belongsTo(models.Users, {
+    Friend.belongsTo(models.User, {
+      as: "RequestFrom",
       foreignKey: {
-        name: "RequestFrom",
+        name: "requestFromId",
         allowNull: false,
       },
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
     });
 
-    Friend.belongsTo(models.Users, {
+    Friend.belongsTo(models.User, {
+      as: "RequestTo",
       foreignKey: {
-        name: "RequestTo",
+        name: "requestToId",
         allowNull: false,
       },
       onUpdate: "RESTRICT",

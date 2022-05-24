@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
-    "Posts",
+    "Post",
     {
       //   id: {
       //     type: DataTypes.INTEGER,
@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Post.associate = (models) => {
-    Post.belongsTo(models.Users, {
+    Post.belongsTo(models.User, {
       foreignKey: {
         name: "userId",
         allowNull: false,
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
 
-    Post.hasMany(models.Comments, {
+    Post.hasMany(models.Comment, {
       foreignKey: {
         name: "postId",
         allowNull: false,
@@ -76,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
 
-    Post.hasMany(models.Likes, {
+    Post.hasMany(models.Like, {
       foreignKey: {
         name: "postId",
         allowNull: false,

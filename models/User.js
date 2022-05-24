@@ -1,17 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "Users",
+    "User",
     {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-      },
+      // id: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   autoIncrement: true,
+      //   primaryKey: true,
+      // },
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           notEmpty: true,
         },
@@ -19,33 +18,24 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           notEmpty: true,
-        },
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-          len: [6, 100],
         },
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        unique: true,
         validate: {
           isEmail: true,
         },
       },
       phoneNumber: {
         type: DataTypes.STRING,
-        allowNull: false,
         unique: true,
-        validate: {
-          notEmpty: true,
-        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       profilePic: {
         type: DataTypes.STRING,
@@ -66,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = (models) => {
-    User.hasMany(models.Posts, {
+    User.hasMany(models.Post, {
       foreignKey: {
         name: "userId",
         allowNull: false,
@@ -75,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
 
-    User.hasMany(models.Comments, {
+    User.hasMany(models.Comment, {
       foreignKey: {
         name: "userId",
         allowNull: false,
@@ -84,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
 
-    User.hasMany(models.Likes, {
+    User.hasMany(models.Like, {
       foreignKey: {
         name: "userId",
         allowNull: false,
@@ -93,20 +83,20 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "RESTRICT",
     });
 
-    User.hasMany(models.Friends, {
+    User.hasMany(models.Friend, {
       as: "RequestFrom",
       foreignKey: {
-        name: "userId",
+        name: "requestFromId",
         allowNull: false,
       },
       onUpdate: "RESTRICT",
       onDelete: "RESTRICT",
     });
 
-    User.hasMany(models.Friends, {
+    User.hasMany(models.Friend, {
       as: "RequestTo",
       foreignKey: {
-        name: "userId",
+        name: "requestToId",
         allowNull: false,
       },
       onUpdate: "RESTRICT",
