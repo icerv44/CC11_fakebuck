@@ -31,6 +31,7 @@ app.use("/auth", authRouter);
 app.use("/users", authenticate, userRouter);
 app.use("/friends", authenticate, friendRouter);
 app.use("/posts", authenticate, postRouter);
+// app.use("/comments", authenticate, commentRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

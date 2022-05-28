@@ -24,7 +24,7 @@ exports.findAcceptedFriend = async (id) => {
   return users;
 };
 
-exports.findPenddingFriend = async (id) => {
+exports.findPendingFriend = async (id) => {
   const friends = await Friend.findAll({
     where: {
       requestToId: id,
@@ -79,4 +79,19 @@ exports.unknowFriend = async (id) => {
     attributes: { exclude: ["password"] },
   });
   return users;
+};
+
+exports.findFriendId = async (id) => {
+  const friends = await Friend.findAll({
+    where: {
+      [Op.or]: [{ requestToId: id }, { requestFromId: id }],
+      status: FRIEND_ACCEPTED,
+    },
+  });
+
+  const friendIds = friends.map((el) => {
+    el.requestToId === id ? el.requestFromId : el.requestToId;
+  });
+
+  return friendIds;
 };
